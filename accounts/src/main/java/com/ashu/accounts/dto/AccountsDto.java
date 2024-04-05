@@ -13,4 +13,6 @@ public class AccountsDto {
 	private String mobileNumber;
 
 	private String branchAddress;
+	
+	private String accountType;
 }

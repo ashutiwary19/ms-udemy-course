@@ -31,4 +31,6 @@ public class Accounts extends AuditedEntity {
 	private String mobileNumber;
 
 	private String branchAddress;
+	
+	private String accountType;
 }
