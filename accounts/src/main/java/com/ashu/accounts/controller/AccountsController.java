@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 
 @RestController
-@RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(path = "/accounts", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class AccountsController {
 
@@ -47,7 +47,7 @@ public class AccountsController {
 
 	@GetMapping("/fetch")
 	public ResponseEntity<CustomerDto> fetchAccountDetails(
-			@Pattern(regexp = "(^$|[0-9]{10}", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
+			@Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
 		CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(customerDto);
 	}
@@ -66,7 +66,7 @@ public class AccountsController {
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> deleteAccountDetails(
-			@Pattern(regexp = "(^$|[0-9]{10}", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
+			@Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
 		boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
 		if (isDeleted) {
 			return ResponseEntity.status(HttpStatus.OK)
