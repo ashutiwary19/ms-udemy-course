@@ -37,7 +37,7 @@ public class AccountsServiceImpl implements IAccountsService {
 		customer.setCreatedAt(LocalDateTime.now());
 		customer.setCreatedBy("accounts-service");
 		Customer savedCustomer = customerRepository.save(customer);
-		Accounts newAccount = accountRespository.save(createAccount(savedCustomer));
+		accountRespository.save(createAccount(savedCustomer));
 	}
 
 	private Accounts createAccount(Customer customer) {
