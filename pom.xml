@@ -6,6 +6,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>accounts</module>
-  	<module>Cards</module>
+  	<module>cards</module>
   </modules>
 </project>
