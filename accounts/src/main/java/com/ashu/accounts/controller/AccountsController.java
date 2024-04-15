@@ -15,12 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ashu.accounts.constants.AccountsConstants;
 import com.ashu.accounts.dto.CustomerDto;
+import com.ashu.accounts.dto.ErrorResponseDto;
 import com.ashu.accounts.dto.ResponseDto;
 import com.ashu.accounts.service.IAccountsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 
+@Tag(
+		name="CRUD Rest Apis for Accounts in ashu",
+		description = "CRUD Rest Apis for Accounts in ashu"
+)
 @RestController
 @RequestMapping(path = "/accounts", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
@@ -38,6 +49,14 @@ public class AccountsController {
 		return "Ready...";
 	}
 
+    @Operation(
+            summary = "Create Account REST API",
+            description = "REST API to create new Customer &  Account inside ashu accounts"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP status OK"
+    )
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
 		iAccountsService.createAccount(customerDto);
@@ -45,13 +64,49 @@ public class AccountsController {
 				.body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
 	}
 
+    @Operation(
+            summary = "Fetch Account Details REST API",
+            description = "REST API to fetch Customer &  Account details based on a mobile number"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
 	@GetMapping("/fetch")
 	public ResponseEntity<CustomerDto> fetchAccountDetails(
 			@Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
 		CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(customerDto);
 	}
-
+	
+    @ApiResponses({
+        @ApiResponse(
+                responseCode = "200",
+                description = "HTTP Status OK"
+        ),
+        @ApiResponse(
+                responseCode = "417",
+                description = "Expectation Failed"
+        ),
+        @ApiResponse(
+                responseCode = "500",
+                description = "HTTP Status Internal Server Error",
+                // To tell the swagger about global error response
+                content = @Content(
+                        schema = @Schema(implementation = ErrorResponseDto.class)
+                )
+        )
+    })
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
 		boolean isUpdated = iAccountsService.updateAccount(customerDto);
@@ -64,6 +119,29 @@ public class AccountsController {
 		}
 	}
 
+    
+    @Operation(
+            summary = "Delete Account & Customer Details REST API",
+            description = "REST API to delete Customer &  Account details based on a mobile number"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "417",
+                    description = "Expectation Failed"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    // To tell the swagger about global error response
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> deleteAccountDetails(
 			@Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
