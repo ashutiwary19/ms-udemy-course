@@ -6,9 +6,13 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Schema(name = "Cards", description = "Schema to hold Card information")
 @Data
+@Setter
+@Getter
 public class CardsDto {
 
 	@NotEmpty(message = "Mobile Number can not be a null or empty")
@@ -17,7 +21,7 @@ public class CardsDto {
 	private String mobileNumber;
 
 	@NotEmpty(message = "Card Number can not be a null or empty")
-	@Pattern(regexp = "(^$|[0-9]{12})", message = "CardNumber must be 12 digits")
+	@Pattern(regexp = "(^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$)", message = "CardNumber must be uuid")
 	@Schema(description = "Card Number of the customer", example = "100646930341")
 	private String cardNumber;
 

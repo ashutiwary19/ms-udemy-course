@@ -15,27 +15,15 @@ import io.swagger.v3.oas.annotations.info.License;
 // we do not need to specify the following, but if for some reason
 // if the package of other classes and this class is different we need to specify 
 // these configs
-/*@ComponentScans({ @ComponentScan("com.ashu.accounts.controller") })
-@EnableJpaRepositories("com.ashu.accounts.repository")
-@EntityScan("com.ashu.accounts.model")*/
+/*
+ * @ComponentScans({ @ComponentScan("com.ashu.accounts.controller") })
+ * 
+ * @EnableJpaRepositories("com.ashu.accounts.repository")
+ * 
+ * @EntityScan("com.ashu.accounts.model")
+ */
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
-@OpenAPIDefinition(
-		info=@Info(
-				title ="Accounts microservice REST API documentation",
-				description="Ashu Accounts microservice REST API documentation",
-				version="v1",
-				contact=@Contact(
-						name="Ashu Tiwary",
-						email="atiwary34@gmail.com"
-				),
-				license=@License(
-						name="Apache 2.0"
-				)
-		),
-		externalDocs=@ExternalDocumentation(
-				description="Ashu Accounts microservice REST API documentation"
-		)
-)
+@OpenAPIDefinition(info = @Info(title = "Accounts microservice REST API documentation", description = "Ashu Accounts microservice REST API documentation", version = "v1", contact = @Contact(name = "Ashu Tiwary", email = "atiwary34@gmail.com"), license = @License(name = "Apache 2.0")), externalDocs = @ExternalDocumentation(description = "Ashu Accounts microservice REST API documentation"))
 public class AccountsApplication {
 
 	public static void main(String[] args) {

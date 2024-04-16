@@ -20,7 +20,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
 public class AuditedEntity {
 
 	@CreatedDate

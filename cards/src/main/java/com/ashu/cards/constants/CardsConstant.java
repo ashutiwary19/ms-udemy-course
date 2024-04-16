@@ -2,9 +2,10 @@ package com.ashu.cards.constants;
 
 public class CardsConstant {
 	private CardsConstant() {
-		
+
 	}
 
+	public static final Integer NEW_CARD_LIMIT = 100000;
 	public static final String SAVINGS = "Savings";
 	public static final String ADDRESS = "123 Main Street, New York";
 	public static final String STATUS_201 = "201";
