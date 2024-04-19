@@ -25,7 +25,7 @@ import com.ashu.loans.service.ILoansService;
  * @author Eazy Bytes
  */
 
-@Tag(name = "CRUD REST APIs for Loans in EazyBank", description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details")
+@Tag(name = "CRUD REST APIs for Loans in Ashu's Bank", description = "CRUD REST APIs in Ashu's Bank to CREATE, UPDATE, FETCH AND DELETE loan details")
 @RestController
 @RequestMapping(path = "/loans", produces = { MediaType.APPLICATION_JSON_VALUE })
 @AllArgsConstructor
