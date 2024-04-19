@@ -3,6 +3,8 @@ package com.ashu.loans.service.impl;
 import java.util.Optional;
 import java.util.Random;
 
+import org.springframework.stereotype.Service;
+
 import com.ashu.loans.constants.LoansContant.LoansConstants;
 import com.ashu.loans.dto.LoansDto;
 import com.ashu.loans.exception.LoanAlreadyExistsException;
@@ -12,6 +14,10 @@ import com.ashu.loans.models.Loans;
 import com.ashu.loans.repository.LoansRepository;
 import com.ashu.loans.service.ILoansService;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class LoansServiceImpl implements ILoansService {
 
 	private LoansRepository loansRepository;
