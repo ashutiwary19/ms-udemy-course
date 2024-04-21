@@ -27,4 +27,16 @@ due to this plugin
 
 maven will look for a jar in the target folder and run it.
 
+we can directly run the account ms
+java -jar target/accounts-0.0.1-SNAPSHOT.jar
 
+Disadvantages of Dockerfile approach to build image
+- Big projects require complex dockerfiles 
+- Writing dockerfile has learning curve to and
+	as a programmer we don't know to bother about it
+- We need to follow good approach and standard to write docker files
+- The dockerfiles should be optimized to generate optimal image
+- To counter this we have build packs
+
+command to build docker file
+docker build -t ashutiwarydock/accounts:v1 .
