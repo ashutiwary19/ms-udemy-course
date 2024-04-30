@@ -8,5 +8,8 @@
   	<module>accounts</module>
   	<module>cards</module>
   	<module>loans</module>
+  	<module>cards_v2</module>
+  	<module>loans_v2</module>
+  	<module>accounts_v2</module>
   </modules>
 </project>
