@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @ConfigurationProperties(prefix = "accounts")
 public class AccountsContactInfoDto {
-	String messsage;
+	String message;
 	Map<String, String> contactDetails;
 	List<String> onCallSupport;
 }
