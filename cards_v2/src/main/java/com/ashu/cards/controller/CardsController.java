@@ -1,5 +1,8 @@
 package com.ashu.cards.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -19,6 +22,7 @@ import com.ashu.cards.dto.CardsDto;
 import com.ashu.cards.dto.ErrorResponseDto;
 import com.ashu.cards.dto.ResponseDto;
 import com.ashu.cards.service.ICardsService;
+import com.ashu.cards.dto.CardsContactInfoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,6 +41,20 @@ import lombok.AllArgsConstructor;
 @RequestMapping(path = "/cards", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class CardsController {
 	private ICardsService cardsService;
+
+	@Value("${build.version}")
+	private String buildVersion;
+
+	@Autowired
+	private Environment environment;
+
+	@Autowired
+	private CardsContactInfoDto cardsContactInfoDto;
+
+	public CardsController(ICardsService iCardsService) {
+		super();
+		this.cardsService = iCardsService;
+	}
 
 	@Operation(description = "Creates a new Card", summary = "Api to create a new cards")
 	@ApiResponses({ @ApiResponse(responseCode = "201", description = "HTTP Status CREATED"),
@@ -92,6 +110,31 @@ public class CardsController {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseDto(CardsConstant.STATUS_417, CardsConstant.MESSAGE_417_DELETE));
 		}
+	}
+
+	@Operation(summary = "Fetch build version of cards MS", description = "REST API to fetch build Details of cards ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/buildInfo")
+	public ResponseEntity<String> getBuildInfo() {
+		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+	}
+
+	@Operation(summary = "Fetch java version of cards MS", description = "REST API to fetch java version Details of cards ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/javaVersion")
+	public ResponseEntity<String> getJavaVersion() {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(environment.getProperty("JAVA_HOME") + "\n" + environment.getProperty("MAVEN_HOME"));
+	}
+
+	@Operation(summary = "Fetch contacts info cards MS", description = "REST API to fetch java contact info of cards ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/contactsInfo")
+	public ResponseEntity<CardsContactInfoDto> getContactsInfo() {
+		return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDto);
 	}
 
 }

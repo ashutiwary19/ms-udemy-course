@@ -40,3 +40,14 @@ Disadvantages of Dockerfile approach to build image
 
 command to build docker file
 docker build -t ashutiwarydock/accounts:v1 .
+
+- we can provide configs in command line arguments as program variables
+--spring.profiles.active=prod --build.version=1.1
+
+- we can provide vm variable through vm arguments like :
+-Dspring.profiles.active=prod -Dbuild.version=1.1
+
+in the envoriment variable we can provide:
+BUILD_VERSION=1.3;SPRING_PROFILES_ACTIVE=prod
+
+

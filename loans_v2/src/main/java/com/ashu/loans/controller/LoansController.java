@@ -9,6 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +20,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.ashu.loans.constants.LoansContant.LoansConstants;
+import com.ashu.loans.dto.LoansContactInfoDto;
 import com.ashu.loans.dto.ErrorResponseDto;
 import com.ashu.loans.dto.LoansDto;
 import com.ashu.loans.dto.ResponseDto;
 import com.ashu.loans.service.ILoansService;
 
 /**
- * @author Eazy Bytes
+ * @author ashu.tiwary
  */
 
 @Tag(name = "CRUD REST APIs for Loans in Ashu's Bank", description = "CRUD REST APIs in Ashu's Bank to CREATE, UPDATE, FETCH AND DELETE loan details")
@@ -33,6 +38,20 @@ import com.ashu.loans.service.ILoansService;
 public class LoansController {
 
 	private ILoansService iLoansService;
+
+	@Autowired
+	private Environment environment;
+	
+	@Autowired
+	private LoansContactInfoDto loansContactInfoDto;
+	
+	@Value("${build.version}")
+	private String buildVersion;
+	
+	public LoansController(ILoansService iLoansService) {
+		super();
+		this.iLoansService = iLoansService;
+	}
 
 	@Operation(summary = "Create Loan REST API", description = "REST API to create new loan inside EazyBank")
 	@ApiResponses({ @ApiResponse(responseCode = "201", description = "HTTP Status CREATED"),
@@ -86,6 +105,31 @@ public class LoansController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
 					.body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
 		}
+	}
+
+	@Operation(summary = "Fetch build version of loans MS", description = "REST API to fetch build Details of loans ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/buildInfo")
+	public ResponseEntity<String> getBuildInfo() {
+		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+	}
+
+	@Operation(summary = "Fetch java version of loans MS", description = "REST API to fetch java version Details of loans ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/javaVersion")
+	public ResponseEntity<String> getJavaVersion() {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(environment.getProperty("JAVA_HOME") + "\n" + environment.getProperty("MAVEN_HOME"));
+	}
+
+	@Operation(summary = "Fetch contacts info loans MS", description = "REST API to fetch java contact info of loans ms")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
+			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
+	@GetMapping("/contactsInfo")
+	public ResponseEntity<LoansContactInfoDto> getContactsInfo() {
+		return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
 	}
 
 }
