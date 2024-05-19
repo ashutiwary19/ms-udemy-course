@@ -11,5 +11,9 @@
   	<module>cards_v2</module>
   	<module>loans_v2</module>
   	<module>accounts_v2</module>
+  	<module>configserver</module>
+  	<module>account_v3</module>
+  	<module>cards_v3</module>
+  	<module>loans_v3</module>
   </modules>
 </project>

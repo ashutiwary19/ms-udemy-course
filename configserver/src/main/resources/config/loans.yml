@@ -1,0 +1,11 @@
+build:
+   version: '3.0'
+
+loans:
+   message: Welcome to ashu tiwary loans api
+   contactDetails:
+      name: Ashu Tiwary - loans
+      email: ashu.tiwary19-loans@gmail.com
+   onCallSupport:
+   - (444) 444-1234
+   - (555) 555-1434

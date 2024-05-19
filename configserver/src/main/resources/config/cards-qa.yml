@@ -1,0 +1,11 @@
+build:
+   version: '2.0'
+
+cards:
+   message: Welcome to ashu tiwary cards api - qa
+   contactDetails:
+      name: Ashu Tiwary cards - qa
+      email: ashu.tiwary19-cards-qa@gmail.com
+   onCallSupport:
+   - (444) 444-1234
+   - (555) 555-1434
