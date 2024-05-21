@@ -1,6 +1,5 @@
 server:
    port: 8090
-debug: true
 spring:
    application:
       name: loans

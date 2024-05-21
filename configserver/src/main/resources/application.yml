@@ -2,15 +2,21 @@ spring:
    application:
       name: configserver
    profiles:
-      active: native
-# active: git
+# active: native
+      active: git
    cloud:
       config:
          server:
-            native:
-               search-locations: classpath:/config
-# search-locations: "file:///Users//eazybytes//Documents//config"
-
+            git:
+               uri: https://github.com/ashutiwary22/ms-udemy-config.git
+               default-label: main
+               timeout: 5
+               clone-on-start: true
+               force-pull: true
+# native:
+# search-locations: classpath:/config
+# for file location rather than the project location we can give location like this
+# search-locations: "file:///c://ashu.tiwary//Documents//config"
 
 encrypt:
    key: 45D81EC1EF61DF9AD8D3E5BB397F9
