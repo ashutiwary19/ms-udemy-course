@@ -20,3 +20,10 @@ spring:
       show-sql: true
    config:
       import: optional:configserver:http://localhost:8071/
+
+# to expose all actuator management api
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
