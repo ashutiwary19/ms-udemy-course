@@ -1,4 +1,5 @@
 services:
+
    rabbit:
       image: rabbitmq:3.13-management
       hostname: rabbitmq
@@ -14,8 +15,7 @@ services:
       extends:
          file: common-config.yml
          service: network-deploy-service
-      networks:
-      - ashutiwarynet
+         
    configserver:
       image: ashutiwarydoc/configserver:v3
       container_name: configserver-ms
@@ -30,12 +30,10 @@ services:
          timeout: 5s
          retries: 10
          start_period: 10s
-      deploy:
-         resources:
-            limits:
-               memory: 700m
-      networks:
-      - ashutiwarynet
+      extends:
+         file: common-config.yml
+         service: microservice-base-config
+         
    accounts:
       image: ashutiwarydoc/accounts:v3
       container_name: accounts-ms
@@ -44,16 +42,12 @@ services:
       depends_on:
          configserver:
             condition: service_completed_successfully
-      deploy:
-         resources:
-            limits:
-               memory: 700m
-      networks:
-      - ashutiwarynet
       environment:
          SPRING_APPLICATION_NAME: cards
-         SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-         SPRING_PROFILE_ACTIVE: default
+      extends:
+         file: common-config.yml
+         service: microservice-configserver-config
+         
    loans:
       image: ashutiwarydoc/loans:v3
       container_name: loans-ms
@@ -62,16 +56,11 @@ services:
       depends_on:
          configserver:
             condition: service_completed_successfully
-      deploy:
-         resources:
-            limits:
-               memory: 700m
-      networks:
-      - ashutiwarynet
       environment:
          SPRING_APPLICATION_NAME: loans
-         SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-         SPRING_PROFILE_ACTIVE: default
+      extends:
+         file: common-config.yml
+         service: microservice-configserver-config
    cards:
       image: ashutiwarydoc/cards:v3
       container_name: cards-ms
@@ -80,16 +69,12 @@ services:
       depends_on:
          configserver:
             condition: service_completed_successfully
-      deploy:
-         resources:
-            limits:
-               memory: 700m
-      networks:
-      - ashutiwarynet
       environment:
          SPRING_APPLICATION_NAME: accounts
-         SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-         SPRING_PROFILE_ACTIVE: default
+      extends:
+         file: common-config.yml
+         service: microservice-configserver-config
+         
 networks:
    ashutiwarynet:
       driver: bridge
