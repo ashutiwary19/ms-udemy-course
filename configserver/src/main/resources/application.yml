@@ -17,6 +17,27 @@ spring:
 # search-locations: classpath:/config
 # for file location rather than the project location we can give location like this
 # search-locations: "file:///c://ashu.tiwary//Documents//config"
+   rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+
+
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+   health:
+      readiness-state:
+         enable: true
+      liveness-state:
+         enable: true
+   endpoint:
+      health:
+         probes:
+            enabled: true
 
 encrypt:
    key: 45D81EC1EF61DF9AD8D3E5BB397F9
