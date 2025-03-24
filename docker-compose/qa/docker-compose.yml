@@ -1,0 +1,115 @@
+services:
+  accountsdb:
+    image: mysql
+    container_name: accountsdb
+    ports:
+      - 3310:3306
+    environment:
+      MYSQL_DATABASE: accountsdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+    networks:
+      - ashutiwarynet
+  loansdb:
+    image: mysql
+    container_name: loansdb
+    ports:
+      - 3311:3306
+    environment:
+      MYSQL_DATABASE: loansdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+    networks:
+      - ashutiwarynet
+  cardsdb:
+    image: mysql
+    container_name: cardsdb
+    ports:
+      - 3312:3306
+    environment:
+      MYSQL_DATABASE: cardsdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+    networks:
+      - ashutiwarynet
+
+  configserver:
+    image: ashutiwarydoc/configserver-discovery-service-demo:v1
+    container_name: configserver-ms
+    ports:
+      - 8071:8071
+    healthcheck:
+      test: curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+    networks:
+      - ashutiwarynet
+
+  accounts:
+    image: ashutiwarydoc/accounts-discovery-service-demo:v1
+    container_name: accounts-ms
+    ports:
+      - 8080:8080
+    depends_on:
+      configserver:
+        condition: service_healthy
+      accountsdb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: accounts
+      SPRING_DATASOURCE_URL: "jdbc:mysql://accountdb:3306/accountdb"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    networks:
+      - ashutiwarynet
+
+  loans:
+    image: ashutiwarydoc/loans-discovery-service-demo:v1
+    container_name: loans-ms
+    ports:
+      - 8090:8090
+    depends_on:
+      configserver:
+        condition: service_healthy
+      loansdb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: loans
+      SPRING_DATASOURCE_URL: "jdbc:mysql://localhost:3306/loansdb"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    networks:
+      - ashutiwarynet
+
+  cards:
+    image: ashutiwarydoc/cards-discovery-service-demo:v1
+    container_name: cards-ms
+    ports:
+      - 9000:9000
+    depends_on:
+      configserver:
+        condition: service_healthy
+      cardsdb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: cards
+      SPRING_DATASOURCE_URL: "jdbc:mysql://localhost:3306/loansdb"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    networks:
+      - ashutiwarynet
+
+networks:
+  ashutiwarynet:
+    driver: bridge
