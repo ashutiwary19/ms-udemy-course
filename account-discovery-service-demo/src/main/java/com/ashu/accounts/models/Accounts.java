@@ -1,5 +1,6 @@
 package com.ashu.accounts.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,19 +19,17 @@ public class Accounts extends AuditedEntity {
 
 	// These annotations tells spring jpa to generate the id automatically
 	// and the native type tells to generate the id in the native type of the
-	// database
-	@Id
-	private Long accountNumber;
 
-	private Long customerId;
+    @Column(name="customer_id")
+    private Long customerId;
 
-	private String name;
+    @Column(name="account_number")
+    @Id
+    private Long accountNumber;
 
-	private String email;
+    @Column(name="account_type")
+    private String accountType;
 
-	private String mobileNumber;
-
-	private String branchAddress;
-	
-	private String accountType;
+    @Column(name="branch_address")
+    private String branchAddress;
 }

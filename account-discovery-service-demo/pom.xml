@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5-SNAPSHOT</version>
+		<version>3.4.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ashu</groupId>
@@ -72,6 +72,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -107,7 +111,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>ashutiwarydoc/${project.artifactId}:v1</image>
+						<image>ashutiwarydoc/${project.artifactId}:v2</image>
 					</to>
 				</configuration>
 				<executions>

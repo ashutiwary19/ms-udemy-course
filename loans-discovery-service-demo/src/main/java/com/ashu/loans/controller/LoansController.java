@@ -32,7 +32,7 @@ import com.ashu.loans.service.ILoansService;
 
 @Tag(name = "CRUD REST APIs for Loans in Ashu's Bank", description = "CRUD REST APIs in Ashu's Bank to CREATE, UPDATE, FETCH AND DELETE loan details")
 @RestController
-@RequestMapping(path = "/loans", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class LoansController {
 
@@ -40,13 +40,13 @@ public class LoansController {
 
 	@Autowired
 	private Environment environment;
-	
+
 	@Autowired
 	private LoansContactInfoDto loansContactInfoDto;
-	
+
 	@Value("${build.version}")
 	private String buildVersion;
-	
+
 	public LoansController(ILoansService iLoansService) {
 		super();
 		this.iLoansService = iLoansService;

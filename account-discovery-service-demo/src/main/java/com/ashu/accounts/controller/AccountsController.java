@@ -34,7 +34,7 @@ import jakarta.validation.constraints.Pattern;
 
 @Tag(name = "CRUD Rest Apis for Accounts in ashu", description = "CRUD Rest Apis for Accounts in ashu")
 @RestController
-@RequestMapping(path = "/accounts", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class AccountsController {
 

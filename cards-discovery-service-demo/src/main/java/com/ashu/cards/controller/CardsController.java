@@ -37,7 +37,7 @@ import lombok.AllArgsConstructor;
 @Tag(name = "CRUD REST APIs for Cards in Ashu's ms card setup", description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card details")
 @Validated
 @RestController
-@RequestMapping(path = "/cards", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class CardsController {
 	private ICardsService cardsService;
 
