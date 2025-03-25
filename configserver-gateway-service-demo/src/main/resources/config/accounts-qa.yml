@@ -1,0 +1,11 @@
+build:
+   version: '2.0'
+
+accounts:
+   message: "Welcome to ashu tiwary accounts qa api"
+   contactDetails:
+      name: "Ashu Tiwary"
+      email: "ashu.tiwary19-qa@gmail.com"
+   onCallSupport:
+      - (444) 444-1234
+      - (555) 555-1434
