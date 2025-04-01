@@ -1,9 +1,12 @@
 package com.ashu.accounts.service.impl;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ashu.accounts.dto.AccountsDto;
+import com.ashu.accounts.dto.CardsDto;
 import com.ashu.accounts.dto.CustomerDetailsDto;
+import com.ashu.accounts.dto.LoansDto;
 import com.ashu.accounts.exception.ResourceNotFoundException;
 import com.ashu.accounts.mapper.AccountsMapper;
 import com.ashu.accounts.mapper.CustomerMapper;
@@ -36,8 +39,12 @@ public class CustomerService implements ICustomersService {
 		CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer,
 				new CustomerDetailsDto());
 		customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(account, new AccountsDto()));
-		customerDetailsDto.setLoansDto(loansClient.fetchLoanDetails(correlationid, mobileNumber).getBody());
-		customerDetailsDto.setCardsDto(cardsClient.fetchCardDetails(correlationid, mobileNumber).getBody());
+		ResponseEntity<LoansDto> loans = loansClient.fetchLoanDetails(correlationid, mobileNumber);
+		ResponseEntity<CardsDto> cards = cardsClient.fetchCardDetails(correlationid, mobileNumber);
+		if (loans != null)
+			customerDetailsDto.setLoansDto(loans.getBody());
+		if (cards != null)
+			customerDetailsDto.setCardsDto(cards.getBody());
 		return customerDetailsDto;
 	}
 
