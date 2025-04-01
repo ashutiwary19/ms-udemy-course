@@ -1,5 +1,9 @@
 package com.ashu.cards.controller;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +38,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "CRUD REST APIs for Cards in Ashu's ms card setup", description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card details")
 @Validated
 @RestController
+@Slf4j
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class CardsController {
 	private ICardsService cardsService;
@@ -70,8 +77,9 @@ public class CardsController {
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/fetch")
-	public ResponseEntity<CardsDto> fetchCardDetails(
+	public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("bank-correlation-id") String correlationId,
 			@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
+		log.error("Correlation-id : ", correlationId);
 		CardsDto cardsDto = cardsService.fetchCard(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(cardsDto);
 	}

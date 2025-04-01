@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ import com.ashu.loans.service.ILoansService;
 
 @Tag(name = "CRUD REST APIs for Loans in Ashu's Bank", description = "CRUD REST APIs in Ashu's Bank to CREATE, UPDATE, FETCH AND DELETE loan details")
 @RestController
+@Slf4j
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class LoansController {
@@ -67,8 +69,9 @@ public class LoansController {
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/fetch")
-	public ResponseEntity<LoansDto> fetchLoanDetails(
+	public ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("bank-correlation-id") String correlationId,
 			@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
+		log.error("Correlation-id", correlationId);
 		LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(loansDto);
 	}
