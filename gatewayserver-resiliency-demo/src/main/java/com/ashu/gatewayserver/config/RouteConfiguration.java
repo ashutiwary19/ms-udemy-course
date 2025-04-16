@@ -3,6 +3,9 @@ package com.ashu.gatewayserver.config;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +14,12 @@ import org.springframework.http.HttpMethod;
 
 @Configuration
 public class RouteConfiguration {
+
+	@Autowired
+	private RedisRateLimiter redisRateLimiter;
+
+	@Autowired
+	private KeyResolver KeyResolver;
 
 	@Bean
 	public RouteLocator bankRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
@@ -29,7 +38,9 @@ public class RouteConfiguration {
 						.uri("lb://LOANS"))
 				.route(path -> path.path("/bank/cards/**")
 						.filters(filter -> filter.rewritePath("/bank/cards/(?<segment>.*)", "/${segment}")
-								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.requestRateLimiter(
+										config -> config.setRateLimiter(redisRateLimiter).setKeyResolver(KeyResolver)))
 						.uri("lb://CARDS"))
 				.build();
 	}
