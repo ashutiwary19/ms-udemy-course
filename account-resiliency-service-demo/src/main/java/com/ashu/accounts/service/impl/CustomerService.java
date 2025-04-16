@@ -46,6 +46,7 @@ public class CustomerService implements ICustomersService {
 		if (cards != null)
 			customerDetailsDto.setCardsDto(cards.getBody());
 		return customerDetailsDto;
+
 	}
 
 }

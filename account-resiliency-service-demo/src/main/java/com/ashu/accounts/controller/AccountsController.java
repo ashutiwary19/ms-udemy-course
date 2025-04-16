@@ -22,6 +22,7 @@ import com.ashu.accounts.dto.CustomerDto;
 import com.ashu.accounts.dto.ErrorResponseDto;
 import com.ashu.accounts.dto.ResponseDto;
 import com.ashu.accounts.service.IAccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -114,12 +115,17 @@ public class AccountsController {
 		}
 	}
 
+	@Retry(name = "getBuildInfo", fallbackMethod = "getBuildInfoFallBack")
 	@Operation(summary = "Fetch build version of Account MS", description = "REST API to fetch build Details of account ms")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/buildInfo")
 	public ResponseEntity<String> getBuildInfo() {
 		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+	}
+
+	public ResponseEntity<String> getBuildInfoFallBack() {
+		return ResponseEntity.status(HttpStatus.OK).body("Not Available");
 	}
 
 	@Operation(summary = "Fetch java version of Account MS", description = "REST API to fetch java version Details of account ms")

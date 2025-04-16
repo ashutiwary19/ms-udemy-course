@@ -9,6 +9,9 @@ spring:
         locator:
           enabled: false
           lowerCaseServiceId: true
+    httpClient:
+      connect-timeout: 1000
+      response-timeout: 2s
 
 management:
   endpoints:
@@ -33,6 +36,14 @@ logging:
     com:
       eazybytes:
         gatewayserver: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
 
 resilience4j.circuitbreaker:
   configs:

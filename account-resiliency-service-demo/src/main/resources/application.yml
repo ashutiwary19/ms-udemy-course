@@ -56,3 +56,11 @@ info:
     name: accounts
     description: Account application
     version: 1.0.0
+
+resilience4j.retry:
+  configs:
+    default:
+      maxAttempts: 3
+      waitDuration: 100
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
