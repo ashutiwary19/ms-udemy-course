@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ashu</groupId>
-	<artifactId>gatewayserver-resiliency-demo</artifactId>
+	<artifactId>gatewayserver-observability-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gatewayserver-observability-demo</name>
 	<description>Edge server for Banking microservice</description>
