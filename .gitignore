@@ -1,0 +1,16 @@
+# Eclipse specific files
+.metadata/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+*.swp
+.project
+.buildpath
+.settings/
+
+# MinIO specific files
+minio/
+minio_data/
+*.minio

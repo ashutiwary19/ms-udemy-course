@@ -25,13 +25,16 @@ management:
         include: "*"
   health:
     readiness-state:
-      enable: true
+      enabled: true
     liveness-state:
-      enable: true
+      enabled: true
   endpoint:
     health:
       probes:
         enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 encrypt:
   key: 45D81EC1EF61DF9AD8D3E5BB397F9
