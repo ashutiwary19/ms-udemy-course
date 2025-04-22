@@ -42,12 +42,7 @@ public class CustomerController {
 			@RequestHeader("bank-correlation-id") String correlationId,
 			@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
 		log.error("Bank Corration id : ", correlationId);
-		try {
-			Thread.sleep(100000000l);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		log.debug("Fetching fetchCustomerDetails");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(customersService.fetchCustomerDetails(mobileNumber, correlationId));
 

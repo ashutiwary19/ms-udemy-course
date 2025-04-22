@@ -72,6 +72,7 @@ public class LoansController {
 	public ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("bank-correlation-id") String correlationId,
 			@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
 		log.error("Correlation-id", correlationId);
+		log.debug("Fetching fetchLoanDetails");
 		LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(loansDto);
 	}
@@ -114,6 +115,7 @@ public class LoansController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/buildInfo")
 	public ResponseEntity<String> getBuildInfo() {
+		log.debug("Fetching getBuildInfo");
 		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
 	}
 
@@ -122,6 +124,7 @@ public class LoansController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/javaVersion")
 	public ResponseEntity<String> getJavaVersion() {
+		log.debug("Fetching getJavaVersion");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(environment.getProperty("JAVA_HOME") + "\n" + environment.getProperty("MAVEN_HOME"));
 	}
@@ -131,6 +134,7 @@ public class LoansController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/contactsInfo")
 	public ResponseEntity<LoansContactInfoDto> getContactsInfo() {
+		log.debug("Fetching contactsInfo");
 		return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
 	}
 

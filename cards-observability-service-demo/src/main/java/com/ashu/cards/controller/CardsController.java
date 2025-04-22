@@ -80,6 +80,7 @@ public class CardsController {
 	public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("bank-correlation-id") String correlationId,
 			@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
 		log.error("Correlation-id : ", correlationId);
+		log.debug("Fetching fetchCardDetails");
 		CardsDto cardsDto = cardsService.fetchCard(mobileNumber);
 		return ResponseEntity.status(HttpStatus.OK).body(cardsDto);
 	}
@@ -132,6 +133,7 @@ public class CardsController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/javaVersion")
 	public ResponseEntity<String> getJavaVersion() {
+		log.debug("Fetching getJavaVersion");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(environment.getProperty("JAVA_HOME") + "\n" + environment.getProperty("MAVEN_HOME"));
 	}
@@ -141,6 +143,7 @@ public class CardsController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/contactsInfo")
 	public ResponseEntity<CardsContactInfoDto> getContactsInfo() {
+		log.debug("Fetching getContactsInfo");
 		return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDto);
 	}
 

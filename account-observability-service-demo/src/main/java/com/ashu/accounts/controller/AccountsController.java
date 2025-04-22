@@ -32,11 +32,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "CRUD Rest Apis for Accounts in ashu", description = "CRUD Rest Apis for Accounts in ashu")
 @RestController
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
+@Slf4j
 public class AccountsController {
 
 	private IAccountsService iAccountsService;
@@ -121,6 +123,7 @@ public class AccountsController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/buildInfo")
 	public ResponseEntity<String> getBuildInfo() {
+		log.debug("Fetching getBuildInfo");
 		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
 	}
 
@@ -142,6 +145,7 @@ public class AccountsController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))) })
 	@GetMapping("/contactsInfo")
 	public ResponseEntity<AccountsContactInfoDto> getContactsInfo() {
+		log.debug("Fetching accountsContactInfoDto");
 		return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
 	}
 
