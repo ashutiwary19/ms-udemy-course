@@ -1,0 +1,137 @@
+services:
+  ms_udemy_db:
+    image: mysql
+    container_name: ms_udemy_db
+    ports:
+      - 3310:3306
+    environment:
+      MYSQL_DATABASE: ms_udemy_db
+    volumes:
+      - ../db:/docker-entrypoint-initdb.d
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+    networks:
+      - ashutiwarynet
+
+  configserver:
+    image: ashutiwarydoc/configserver-observability-service-demo:v2
+    container_name: configserver-ms
+    ports:
+      - 8071:8071
+    healthcheck:
+      test: curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+    environment:
+      OTEL_SERVICE_NAME: "configserver"
+    networks:
+      - ashutiwarynet
+
+  eurekaserver:
+    image: ashutiwarydoc/eureka-observability-service-demo:v1
+    container_name: eurekaserver-ms
+    ports:
+      - 8070:8070
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1
+      interval: 20s
+      timeout: 20s
+      retries: 20
+      start_period: 20s
+    environment:
+      OTEL_SERVICE_NAME: "eurekaserver"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    networks:
+      - ashutiwarynet
+
+  accounts:
+    image: ashutiwarydoc/accounts-observability-service-demo:v2
+    container_name: accounts-ms
+    ports:
+      - 8080:8080
+    depends_on:
+      configserver:
+        condition: service_healthy
+      ms_udemy_db:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: accounts
+      SPRING_DATASOURCE_URL: "jdbc:mysql://ms_udemy_db:3306/ms_udemy_db"
+      OTEL_SERVICE_NAME: "accounts"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+    networks:
+      - ashutiwarynet
+
+  loans:
+    image: ashutiwarydoc/loans-observability-service-demo:v2
+    container_name: loans-ms
+    ports:
+      - 8090:8090
+    depends_on:
+      configserver:
+        condition: service_healthy
+      ms_udemy_db:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: loans
+      SPRING_DATASOURCE_URL: "jdbc:mysql://ms_udemy_db:3306/ms_udemy_db"
+      OTEL_SERVICE_NAME: "loans"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+    networks:
+      - ashutiwarynet
+
+  cards:
+    image: ashutiwarydoc/cards-observability-service-demo:v2
+    container_name: cards-ms
+    ports:
+      - 9000:9000
+    depends_on:
+      configserver:
+        condition: service_healthy
+      ms_udemy_db:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: cards
+      SPRING_DATASOURCE_URL: "jdbc:mysql://ms_udemy_db:3306/ms_udemy_db"
+      OTEL_SERVICE_NAME: "cards"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+    networks:
+      - ashutiwarynet
+  gatewayserver:
+    image: ashutiwarydoc/gatewayserver-observability-demo:v1
+    container_name: gatewayserver-ms
+    ports:
+      - 8072:8072
+    environment:
+      SPRING_APPLICATION_NAME: gatewayserver
+      OTEL_SERVICE_NAME: "gatewayserver"
+
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+    networks:
+      - ashutiwarynet
+
+networks:
+  ashutiwarynet:
+    driver: bridge
