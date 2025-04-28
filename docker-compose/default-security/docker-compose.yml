@@ -115,7 +115,7 @@ services:
     networks:
       - ashutiwarynet
   gatewayserver:
-    image: ashutiwarydoc/gatewayserver-observability-demo:v1
+    image: ashutiwarydoc/gatewayserver-security-demo:v1
     container_name: gatewayserver-ms
     ports:
       - 8072:8072
