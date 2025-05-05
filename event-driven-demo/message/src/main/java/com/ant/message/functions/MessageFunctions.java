@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MessageFunctions {
 
 	@Bean
-	public Function<AccountsMsgDto, AccountsMsgDto> email() {
+	public Function<AccountsMsgDto,AccountsMsgDto> email() {
 		return accountsMsgDto -> {
 			log.info("Sending EMAIL with details : " + accountsMsgDto.toString());
 			return accountsMsgDto;
