@@ -1,0 +1,20 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: "message"
+  cloud:
+    function:
+      definition: initCommunication|email|sms
+    stream:
+      bindings:
+        initCommunicationemailsms-in-0:
+          destination: send-communication
+          group: ${spring.application.name}
+        initCommunicationemailsms-out-0:
+          destination: communication-sent
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
