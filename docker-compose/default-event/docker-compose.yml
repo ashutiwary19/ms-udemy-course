@@ -1,6 +1,7 @@
 services:
   rabbit:
     image: rabbitmq:3.12-management
+    user: 0:0
     hostname: rabbitmq
     ports:
       - "5672:5672"
