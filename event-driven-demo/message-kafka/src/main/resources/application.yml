@@ -6,13 +6,13 @@ spring:
     name: "message"
   cloud:
     function:
-      definition: initCommunication|email|sms
+      definition: email|sms
     stream:
       bindings:
-        initCommunicationemailsms-in-0:
+        emailsms-in-0:
           destination: send-communication
           group: ${spring.application.name}
-        initCommunicationemailsms-out-0:
+        emailsms-out-0:
           destination: communication-sent
       kafka:
         binder:

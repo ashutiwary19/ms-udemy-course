@@ -2,29 +2,22 @@ package com.ant.message.functions;
 
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.ant.message.dto.AccountsMsgDto;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.function.Function;
 
 @Configuration
-@Slf4j
 public class MessageFunctions {
-	
-	@Bean
-	Function<Object, Object> initCommunication() {
-		return packet -> {
-			log.info("Sending init with details : " + packet.toString());
-			return packet;
-		};
-	}
+
+	private static final Logger log = LoggerFactory.getLogger(MessageFunctions.class);
 
 	@Bean
-	public Function<AccountsMsgDto,AccountsMsgDto> email() {
+	public Function<AccountsMsgDto, AccountsMsgDto> email() {
 		return accountsMsgDto -> {
-			log.info("Sending EMAIL with details : " + accountsMsgDto.toString());
+			log.info("Sending email with the details : " + accountsMsgDto.toString());
 			return accountsMsgDto;
 		};
 	}
@@ -32,8 +25,9 @@ public class MessageFunctions {
 	@Bean
 	public Function<AccountsMsgDto, Long> sms() {
 		return accountsMsgDto -> {
-			log.info("Sending SMS with details : " + accountsMsgDto.toString());
-			return accountsMsgDto.getAccountNumber();
+			log.info("Sending sms with the details : " + accountsMsgDto.toString());
+			return accountsMsgDto.accountNumber();
 		};
 	}
+
 }

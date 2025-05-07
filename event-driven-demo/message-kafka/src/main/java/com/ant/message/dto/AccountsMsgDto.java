@@ -1,17 +1,15 @@
 package com.ant.message.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
  * @author ASHU
  *
  */
-@Data
-@AllArgsConstructor
-public class AccountsMsgDto {
-	private Long accountNumber;
-	private String name;
-	private String email;
-	private String mobileNumber;
+
+/**
+ * @param accountNumber
+ * @param name
+ * @param email
+ * @param mobileNumber
+ */
+public record AccountsMsgDto(Long accountNumber, String name, String email, String mobileNumber) {
 }
