@@ -2,4 +2,6 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IkkxOHh2NVV5MllkcDhuakpDaVIwcnEtM0pLYmp6SWJSVzU3SHVF
 
 kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
 
-docker run --name ms_udemy -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 -v /D:/app/mysql:/var/lib/mysql mysql:latest
+docker run --name ms_udemy -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 -v /D:/app/mysql:/var/lib/mysql mysql:latest
+
+MYSQL_ROOT_PASSWORD
