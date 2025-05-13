@@ -1,0 +1,6 @@
+dependencies:
+- name: ant-bank-common
+  repository: file://../../ant-bank-common
+  version: 0.1.0
+digest: sha256:436fa350c0823eda2d695432ef37e8f031d9be9fdd87353099f791ac2bfe260f
+generated: "2025-05-10T23:42:08.7806357+05:30"

@@ -1,0 +1,25 @@
+deploymentName: accounts-deployment
+serviceName: accounts
+appLabel: accounts
+appName: accounts
+
+replicateCount: 1
+
+image:
+  repository: ashutiwarydoc/accounts-kafka-event-service-demo
+  tag: v1
+
+containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+appname_enabled: true
+profile_enabled: true
+config_enabled: true
+eureka_enabled: true
+resourceserver_enabled: false
+otel_enabled: true
+kafka_enabled: true

@@ -1,0 +1,27 @@
+dependencies:
+- name: ant-bank-common
+  repository: file://../../ant-bank-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../ant-bank-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../ant-bank-services/eurekaserver
+  version: 0.1.0
+- name: accounts
+  repository: file://../../ant-bank-services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../ant-bank-services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../ant-bank-services/loans
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../ant-bank-services/gatewayserver
+  version: 0.1.0
+- name: message
+  repository: file://../../ant-bank-services/message
+  version: 0.1.0
+digest: sha256:23b2536ad5de6a89c8ffc8e4131a9d390076d00a86ddfd6b4f6a0cac4d025165
+generated: "2025-05-11T00:27:29.8437094+05:30"
